@@ -1,0 +1,46 @@
+            var students = [
+                {
+                    class: 11,
+                    roll: 1,
+                    name: "Tirtha",
+                    examResults: {
+                        Bangla: 65,
+                        English: 95,
+                        Accounting: 89,
+                        Ict: 94,
+                        Management: 86,
+                        Finans: 49,
+                        Economic: 67
+                    }
+                },
+                {
+                    class: 12,
+                    roll: 1,
+                    name: "deepak",
+                    examResults: {
+                        Bangla: 65,
+                        English: 95,
+                        Accounting: 89,
+                        Ict: 94,
+                        Management: 86,
+                        Finans: 49,
+                        Economic: 67,
+                        total:56
+                    }
+                },
+                {
+                    class: 11,
+                    roll: 74,
+                    name: "Fahim Uddin",
+                    examResults: {
+                        Bangla: 70,
+                        English: 45,
+                        Accounting: 9,
+                        Ict: 84,
+                        Management: 66,
+                        Finans: 88,
+                        Economic: 87
+                    }
+                }
+                
+            ];
