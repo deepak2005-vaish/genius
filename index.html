@@ -61,28 +61,7 @@
     visibility: hidden;
     pointer-events: none; /* Prevent interaction with hidden preloader */
 }
-    </style>
-    <script src="script.js"></script>
-    <script> 
-
-window.addEventListener('load', function() {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-         preloader.classList.add('hide-preloader');
-
-         preloader.addEventListener('transitionend', function() {
-            preloader.remove();
-        });
-        setTimeout(function(){
-            preloader.classList.add('hide-preloader');
-        },5000);
-        }
-    }
-); 
-</script>
-
-  <style>
-    body{
+     body{
         background-color: darkgray;
     }
     .box{
@@ -104,6 +83,24 @@ margin-left: 1.5cm;
         color: aqua;
     }
  
-</style>
-</body>
+ 
+    </style>
+     <script> 
+ window.addEventListener('load', function() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+         preloader.classList.add('hide-preloader');
+
+         preloader.addEventListener('transitionend', function() {
+            preloader.remove();
+        });
+        setTimeout(function(){
+            preloader.classList.add('hide-preloader');
+        },5000);
+        }
+    }
+); 
+</script>
+
+ </body>
 </html>
