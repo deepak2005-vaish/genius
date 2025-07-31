@@ -107,10 +107,10 @@
                 name: 'Rahul',
                 class: '10th',
                 subjects: {
-                    maths: 90,
-                    science: 88,
-                    english: 85,
-                    history: 75
+                    maths: 90/100,
+                    science: 88/100,
+                    english: 85/100,
+                    history: 75/100
                 }
             },
 
@@ -143,7 +143,7 @@
                     <h4>Subject Marks</h4>
                     ${subjectList}
                     <hr>
-                    <p class="result-item"><strong>Total Marks:</strong> ${totalMarks}</p>
+                    <p class="result-item"><strong>Total Marks:</strong> ${totalMarks/400}</p>
                     <p class="result-item"><strong>Percentage:</strong> ${percentage.toFixed(2)}%</p>
                 `;
 
