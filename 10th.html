@@ -56,6 +56,14 @@
         .result-item {
             margin-bottom: 10px;
         }
+        .pass{
+            color: green;
+            font-weight: bold;
+        }
+        .fail{
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -111,12 +119,11 @@
                     science: 88,
                     english: 8,
                     history: 75,
-                    econ:67
-                 }
+                  }
             },
 
         };
-
+const passingPercentage=33;
         function showResult() {
             const rollNo = document.getElementById('rollNoInput').value.trim();
             const resultDiv = document.getElementById('result');
@@ -127,15 +134,31 @@
                 const student = studentData[rollNo];
                 let totalMarks = 0;
                 let subjectList = '';
+                let failedInAnySubject=false;
+                const minPassingMarkPerSubject=33;
 
                 for (const subject in student.subjects) {
-                    totalMarks += student.subjects[subject];
+                    totalMarks += marks;
+                    let subjectStatus='';
+                    if(marks <minPassingMarkPerSubject){
+                        subjectStatus='<span class="fail">(fail)</span>';
+                        failedInAnySubject=true;
+                    }
                     subjectList += `<p class="result-item"><strong>${subject.charAt(0).toUpperCase() + subject.slice(1)}:</strong> ${student.subjects[subject]}</p>`;
                 }
-
-                const numberOfSubjects = Object.keys(student.subjects).length;
+                 const numberOfSubjects = Object.keys(student.subjects).length;
+                 const maxPossibleMarks=numberOfSubjects*100;
                 const percentage = (totalMarks / (numberOfSubjects * 100)) * 100;
-                
+                let overallStatus='';
+                let statusClass='';
+                if(percentage>=passingPercentage && ! failedInAnySubject){
+                    overallStatus='PASS';
+                    statusClass='pass';
+                }
+                else{
+                    overallStatus='FAIL';
+                    statusClass='fail';
+                }
                 let resultHTML = `
                     <p class="result-item"><strong>Name:</strong> ${student.name}</p>
                     <p class="result-item"><strong>Roll No:</strong> ${rollNo}</p>
@@ -146,7 +169,7 @@
                     <hr>
                     <p class="result-item"><strong>Total Marks:</strong> ${totalMarks}</p>
                     <p class="result-item"><strong>Percentage:</strong> ${percentage.toFixed(2)}%</p>
-                `;
+                   <p class="result-item"><strong>Result:</strong> <span class="${statusClass}">${overallStatus}</span></p>           `;
 
                 resultDiv.innerHTML = resultHTML;
 
