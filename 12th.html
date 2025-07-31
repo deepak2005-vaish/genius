@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -56,26 +56,47 @@
         .result-item {
             margin-bottom: 10px;
         }
+        .pass {
+            color: green;
+            font-weight: bold;
+        }
+        .fail {
+            color: purple;
+            font-weight: bold;
+        }
+        .status-fail{
+            color: red;
+            font-weight: bold;
+        }
+        .status-compartement{
+color: orange;
+        }
+         .status-pass{
+            color:green;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h2>Student Result Portal</h2>
-        <p> enter your Roll Number</p>
+        <h2>RESULT SHEET(2025)</h2>
+        <p>enter your Roll Number </p>
         <input type="text" id="rollNoInput" placeholder="Enter Roll Number">
         <button onclick="showResult()">Show Result</button>
 
         <div id="result">
             </div>
     </div>
-     <script>
+
+    <script>
         // Sample student data
         // In a real application, this data would come from a database or a server.
         const studentData = {
-            '101': {
+            '501': {
                 name: 'Anjali Sharma',
-                class: '12th',
+                class: '10th',
                 subjects: {
                     maths: 85,
                     science: 92,
@@ -83,39 +104,39 @@
                     history: 65
                 }
             },
-            '102': {
+            '502': {
                 name: 'Rahul Kumar',
-                class: '12th',
+                class: '10th',
                 subjects: {
-                    maths: 90,
+                    maths: 9,
                     science: 88,
                     english: 85,
                     history: 75
                 }
             },
-            '103': {
+            '503': {
                 name: 'Priya Singh',
-                class: '12th',
+                class: '10th',
                 subjects: {
-                    maths: 70,
+                    maths: 4,
                     science: 75,
-                    english: 80,
-                    history: 90
+                    english: 8,
+                    history: 9
                 }
             },
-                        '104': {
-                name: 'Rahul Kumar',
-                fname: 'amit kumar',
-                class: '12th',
+            '504': { // Adding a student who might fail
+                name: 'Vijay Verma',
+                class: '10th',
                 subjects: {
-                    maths: 90,
-                    science: 88,
-                    english: 85,
-                    history: 75,
-                 }
-            },
-
+                    maths: 25,
+                    science: 30,
+                    english: 35,
+                    history: 40
+                }
+            }
         };
+
+        const passingPercentage = 33; // Define the passing percentage
 
         function showResult() {
             const rollNo = document.getElementById('rollNoInput').value.trim();
@@ -127,28 +148,61 @@
                 const student = studentData[rollNo];
                 let totalMarks = 0;
                 let subjectList = '';
-
-                for (const subject in student.subjects) {
-                    totalMarks += student.subjects[subject];
-                    subjectList += `<p class="result-item"><strong>${subject.charAt(0).toUpperCase() + subject.slice(1)}:</strong> ${student.subjects[subject]}</p>`;
+                letFailedInAnySubject=false;
+ let failedSubjectsCount=0;
+                // You can also define a minimum passing mark per subject if needed
+ const minPassingMarkPerSubject=33;
+                 for (const subject in student.subjects) {
+                    const marks = student.subjects[subject];
+                    totalMarks += marks;
+                    let subjectStatus = '';
+                    if (marks < minPassingMarkPerSubject) {
+                        subjectStatus = '<span class="fail">(FAIL)</span>' ;
+                     }
+                     subjectList += `<p class="result-item"><strong>${subject.charAt(0).toUpperCase() + subject.slice(1)}:</strong> ${marks}${subjectStatus}</p>`;
                 }
 
-                const numberOfSubjects = Object.keys(student.subjects).length;
-                const percentage = (totalMarks / (numberOfSubjects * 100)) * 100;
-                
-                let resultHTML = `
-                    <p class="result-item"><strong>Name:</strong> ${student.name}</p>
-                                                            <p class="result-item"><strong>Father-name:</strong> ${student.fname}</p>
 
+                const PassingMarks=student.passingMarks ||33;
+                for (const subject in student.subjects) {
+                    const marks = student.subjects[subject];
+                     let subjectStatus = '';
+                    if (marks < PassingMarks) {
+                        subjectStatus = 'FAIL';
+                         failedSubjectsCount++;
+                    }
+                 }
+
+                const numberOfSubjects = Object.keys(student.subjects).length;
+                 const percentage = (totalMarks / (numberOfSubjects*100)) * 100;
+                
+                let overallStatus = '';
+                let statusClass = '';
+if(failedSubjectsCount <=1){
+    overallStatus='PASS';
+    statusClass='status-pass';
+     
+}
+else if(failedSubjectsCount <=2){
+    overallStatus ='COMPARTMENT';
+    statusClass='status-compartement';
+}
+else {
+    overallStatus = 'FAIL';
+    statusClass ='status-fail';
+}
+ 
+                 let resultHTML = `
+                    <p class="result-item"><strong>Name:</strong> ${student.name}</p>
                     <p class="result-item"><strong>Roll No:</strong> ${rollNo}</p>
                     <p class="result-item"><strong>Class:</strong> ${student.class}</p>
- 
                     <hr>
                     <h4>Subject Marks</h4>
                     ${subjectList}
                     <hr>
                     <p class="result-item"><strong>Total Marks:</strong> ${totalMarks}</p>
                     <p class="result-item"><strong>Percentage:</strong> ${percentage.toFixed(2)}%</p>
+                    <p class="result-item"><strong>Result:</strong> <span class="${statusClass}">${overallStatus}</span></p>
                 `;
 
                 resultDiv.innerHTML = resultHTML;
@@ -157,7 +211,9 @@
                 resultDiv.innerHTML = `<p style="color: red;">Student with Roll Number '${rollNo}' not found.</p>`;
             }
         }
-     </script>
+    </script>
 
 </body>
 </html>
+
+  
